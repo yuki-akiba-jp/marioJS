@@ -30,6 +30,27 @@ class Ojisan{
             this.y = ((((ly+31)>>4)<<4)-32)<<4;
         }
     }
+    checkWall(){
+        let lx = (this.x+this.vx)>>4;
+        let ly = (this.y+this.vy)>>4;
+        if(field.isBlock(lx+15,ly+9)|| field.isBlock(lx+15,ly+15)||field.isBlock(lx+14,ly+24)){
+            this.vx = 0;
+            this.x -= 8;
+        }else if(field.isBlock(lx,ly+9)|| field.isBlock(lx,ly+15)||field.isBlock(lx,ly+24)){
+            this.vx = 0;
+            this.x += 8;
+        }
+    }
+    checkCeil(){
+        if(this.vy>=0)return;
+        let lx = (this.x+this.vx)>>4;
+        let ly = (this.y+this.vy)>>4;
+        if(field.isBlock(lx+8,ly+6)){
+            this.jump = 15;
+            this.vy = 0;
+        }
+    }
+ 
 
     updateJump(){
         if(keyUp){
@@ -91,7 +112,9 @@ class Ojisan{
         this.x += this.vx;
         this.y += this.vy;
 
+       this.checkWall();
        this.checkFloor();
+       this.checkCeil();
     }
     draw(){
         let px = (this.x>>4) - field.scrollX;
