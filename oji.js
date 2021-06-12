@@ -19,6 +19,10 @@ class Ojisan{
         this.dirc = 0;
         this.jump = 0;
     }
+    checkFloor(){
+
+    }
+
     updateJump(){
         if(keyUp){
             if(this.jump == 0){
@@ -78,6 +82,7 @@ class Ojisan{
         if(this.vy<64)this.vy+=grabity;
         this.x += this.vx;
         this.y += this.vy;
+
         if(this.y > 160<<4){
             if(this.anim == JUMP)this.anim=Walk;
             this.jump = 0;
