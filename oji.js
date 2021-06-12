@@ -20,7 +20,15 @@ class Ojisan{
         this.jump = 0;
     }
     checkFloor(){
-
+        if(this.vy<=0)return;
+        let lx = this.x>>4;
+        let ly = (this.y+this.vy)>>4;
+        if(field.isBlock(lx+1,ly+31)|| field.isBlock(lx+14,ly+31)){
+            if(this.anim == JUMP)this.anim = Walk;
+            this.jump = 0;
+            this.vy = 0;
+            this.y = ((((ly+31)>>4)<<4)-32)<<4;
+        }
     }
 
     updateJump(){
@@ -83,12 +91,7 @@ class Ojisan{
         this.x += this.vx;
         this.y += this.vy;
 
-        if(this.y > 160<<4){
-            if(this.anim == JUMP)this.anim=Walk;
-            this.jump = 0;
-            this.vy = 0;
-            this.y = 160<<4;
-        }
+       this.checkFloor();
     }
     draw(){
         let px = (this.x>>4) - field.scrollX;
