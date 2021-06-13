@@ -45,12 +45,20 @@ class Ojisan{
         if(this.vy>=0)return;
         let lx = (this.x+this.vx)>>4;
         let ly = (this.y+this.vy)>>4;
-        if(field.isBlock(lx+8,ly+6)){
+        let bl;
+        if(bl = field.isBlock(lx+8,ly+6)){
             this.jump = 15;
             this.vy = 0;
+        if(bl!=371)block.push(new Block(bl,(lx+8)>>4,(ly+6)>>4));
+        else{
+        block.push(new Block(bl,(lx+8)>>4,(ly+6)>>4,1,20,-60));
+        block.push(new Block(bl,(lx+8)>>4,(ly+6)>>4,1,-20,-60));
+        block.push(new Block(bl,(lx+8)>>4,(ly+6)>>4,1,20,-20));
+        block.push(new Block(bl,(lx+8)>>4,(ly+6)>>4,1,-20,-20));
+        }
         }
     }
- 
+
 
     updateJump(){
         if(keyUp){

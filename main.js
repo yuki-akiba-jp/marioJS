@@ -18,7 +18,7 @@ let frameCount = 0;
 
 let ojisan = new Ojisan(100,100);
 let field = new Field();
-
+let block = [];
 window.onload =()=>{
     startTime = performance.now();
     mainLoop();
@@ -29,20 +29,27 @@ function drawSprite(snum, x, y){
     let sprite_Y = (snum>>4)<<4;
     vcon.drawImage(chImg,sprite_X,sprite_Y,16,32, x, y,16,32);
 }
+function update(){
+    field.update();
+    ojisan.update();
+    for (let i = block.length-1; i>=0; i--) {
+        block[i].update();
+        if(block[i].kill)block.splice(i,1);
+    }
+}
 
 function draw() {
     vcon.fillStyle = 'skyblue';
     vcon.fillRect(0,0,ScreenSizeW,ScreenSizeH);
     field.draw();
+    for (let i = block.length-1; i>=0; i--) {
+        block[i].draw();
+    }
     ojisan.draw();
     vcon.fillStyle = 'white';
     vcon.font = '24px'
     vcon.fillText("Frame:"+frameCount,0,20);
     con.drawImage(vcan,0,0,vcan.width,vcan.height, 0,0,can.width,can.height);
-}
-function update(){
-    field.update();
-    ojisan.update();
 }
 
 function mainLoop(){

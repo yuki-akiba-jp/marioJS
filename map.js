@@ -33,15 +33,16 @@ class Field{
     }
     isBlock(x,y){
         let bl = fieldData[(y>>4)*fieldsizeW+(x>>4)];
-        if(bl<368)return false;
-        return blType[bl-368] == 1;
+        if(bl<368)return 0;
+        return blType[bl-368] == 1 ?bl:0;
     }
     update(){
         if((ojisan.x>>4) > this.scrollX+128)this.scrollX = (ojisan.x>>4) - 128;
-        
     }
 
     drawBlock(bl,px,py){
+        const anim = [0,1,2,1,0];
+        if(bl==368)bl+=anim[(frameCount>>3)%5];
         let sx = (bl%16)<<4;
         let sy = (bl>>4)<<4;
         vcon.drawImage(chImg,sx,sy,16,16,px,py,16,16);
