@@ -17,8 +17,6 @@ class Block{
     }
     update(){
         if(this.kill)return;
-       
-
         this.count++;
         if(this.count ==10 && this.type == 0){
             this.kill = true;
