@@ -18,6 +18,12 @@ class Item extends Sprite{
     }
     update(){
         if(this.kill)return;
+        if(checkHit(ojisan,this)){
+            ojisan.kinoko = 1;
+            this.kill = true;
+            return;
+        }
+
         if(++this.count<=16){
             this.y -= (1<<4);
             if(this.count == 16)this.vx =24;

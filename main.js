@@ -42,7 +42,6 @@ function update(){
     updateObj(block);
     updateObj(item);
     ojisan.update();
-    
 }
 function drawObj(obj){
     for (let i = obj.length-1; i>=0; i--) {

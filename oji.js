@@ -11,6 +11,8 @@ class Ojisan{
     constructor(x,y) {
         this.x = x<<4;
         this.y = y<<4;
+        this.w = 16;
+        this.h = 32;
         this.vx = 0;
         this.vy = 0;
         this.anim = 0;
@@ -18,6 +20,7 @@ class Ojisan{
         this.acou = 0;
         this.dirc = 0;
         this.jump = 0;
+        this.kinoko = 0;
     }
     checkFloor(){
         if(this.vy<=0)return;
@@ -115,6 +118,14 @@ class Ojisan{
     }
 
     update(){
+        if(this.kinoko){
+            let anim = [32,14,32,14,32,14,0,32,14,0];
+            this.snum = anim[this.kinoko>>2];
+            if(this.dirc)this.snum+=48;
+            if(++this.kinoko == 40)this.kinoko = 0;
+            return;
+        }
+
         this.acou++;
         if(Math.abs(this.vx) == maxSpeed)this.acou++;
         this.updateJump();
