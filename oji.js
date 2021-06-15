@@ -6,13 +6,18 @@ const grabity = 4;
 const maxSpeed = 32;
 const Left = 1;
 const Right = 0;
+const typeMini = 16;
+const typebig = 2;
+const typeFire = 4;
+
 
 class Ojisan{
     constructor(x,y) {
         this.x = x<<4;
         this.y = y<<4;
+        this.ay = 16;
         this.w = 16;
-        this.h = 32;
+        this.h = 16;
         this.vx = 0;
         this.vy = 0;
         this.anim = 0;
@@ -21,6 +26,7 @@ class Ojisan{
         this.dirc = 0;
         this.jump = 0;
         this.kinoko = 0;
+        this.type = typeMini;
     }
     checkFloor(){
         if(this.vy<=0)return;
@@ -57,7 +63,7 @@ class Ojisan{
         if(bl!=371){
             block.push(new Block(bl,x,y));
             item.push(new Item(218,x,y,0,0));
-        }
+        }else if(this.type == typeMini)block.push(new Block(bl,x,y));
         else{
         block.push(new Block(bl,x,y,1,20,-60));
         block.push(new Block(bl,x,y,1,-20,-60));
@@ -109,20 +115,31 @@ class Ojisan{
                 break;
             case Walk:
                 this.snum = 2+((this.acou>>3)%3);
-                break;
+                    break;
             case Brake:
                 this.snum = 5;
+                    break;
+            case JUMP:
+                this.snum = 6;
                 break;
-        }
-        if(this.dirc && !this.jump)this.snum +=48;
+                    }
+            if(this.dirc)this.snum +=48;
+            if(this.type == typeMini)this.snum +=32;
+
     }
 
     update(){
         if(this.kinoko){
             let anim = [32,14,32,14,32,14,0,32,14,0];
             this.snum = anim[this.kinoko>>2];
+            if(this.snum == 32)this.h =16;
+            else this.h = 32;
             if(this.dirc)this.snum+=48;
-            if(++this.kinoko == 40)this.kinoko = 0;
+            if(++this.kinoko == 40){
+                this.type = typebig;
+                this.ay = 0;
+                this.kinoko = 0;
+            }
             return;
         }
 
@@ -143,6 +160,11 @@ class Ojisan{
     draw(){
         let px = (this.x>>4) - field.scrollX;
         let py = (this.y>>4) - field.scrollY;
-        drawSprite(this.snum,px,py);
+        let w = this.w;
+        let h = this.h;
+        let sprite_X = (this.snum%16)*16;
+        let sprite_Y = (this.snum>>4)<<4;
+        py += (32-h);
+        vcon.drawImage(chImg,sprite_X,sprite_Y,this.w,this.h, px, py,w,h);
     }
 }

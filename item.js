@@ -18,7 +18,8 @@ class Item extends Sprite{
     }
     update(){
         if(this.kill)return;
-        if(checkHit(ojisan,this)){
+        if(ojisan.kinoko)return;
+        if(this.checkHit(ojisan)){
             ojisan.kinoko = 1;
             this.kill = true;
             return;
