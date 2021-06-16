@@ -129,7 +129,7 @@ class Ojisan{
     }
 
     update(){
-        if(this.kinoko){
+        if(this.kinoko ){
             let anim = [32,14,32,14,32,14,0,32,14,0];
             this.snum = anim[this.kinoko>>2];
             if(this.snum == 32)this.h =16;

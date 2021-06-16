@@ -1,5 +1,5 @@
 class Item extends Sprite{
-    checkFloor(){
+    checkFloor(){ 
         if(this.vy<=0)return;
         let lx = this.x>>4;
         let ly = (this.y+this.vy)>>4;
@@ -15,11 +15,12 @@ class Item extends Sprite{
         {
             this.vx *= -1 ;
         }
-    }
+    }llllllllll
     update(){
         if(this.kill)return;
         if(ojisan.kinoko)return;
-        if(this.checkHit(ojisan)){
+
+        if(this.checkHit(ojisan)&&ojisan.type == typeMini){
             ojisan.kinoko = 1;
             this.kill = true;
             return;
